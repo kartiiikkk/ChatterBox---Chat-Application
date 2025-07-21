@@ -1,10 +1,11 @@
 #include "message.hpp"
 #include <iostream>
 #include <boost/asio.hpp>
+#include <mutex>
 
 using boost::asio::ip::tcp;
 
-atomic<bool> ready_to_prompt(false);
+mutex cout_mutex;
 
 void async_read(tcp::socket &socket){
     auto buffer = make_shared<boost::asio::streambuf>();
@@ -14,11 +15,12 @@ void async_read(tcp::socket &socket){
             istream is(buffer.get());
             string received;
             getline(is, received);
-            
-            cout<<"\nServer: "<<received<<endl;
-            ready_to_prompt = true;
 
+            lock_guard<std::mutex> lock(cout_mutex);
+            cout << "\nServer: " << received << endl;
             cout << "Enter message:- ";
+            cout.flush();
+            
             async_read(socket);
         }else{
             cerr<< "Read failed: "<<ec.message()<<endl;
@@ -43,13 +45,18 @@ int main(int argc, char *argv[]){
     thread t([&io_context, &socket](){
         while(true){
             string data;
-            
+
+            {
+                lock_guard<mutex> lock(cout_mutex);
+                cout << "Enter message:- ";
+                cout.flush();
+            }
+
             getline(cin,data);
             data+="\n";
             boost::asio::post(io_context, [&, data](){
                 boost::asio::write(socket,boost::asio::buffer(data));
             });
-            cout<<"Enter message:-";
         }
     });
     io_context.run();

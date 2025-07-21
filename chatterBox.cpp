@@ -58,9 +58,6 @@ void Session::async_write(string messageBody, size_t messageLength){
 
 void Session::start(){
     room.join(shared_from_this());
-
-    Message welcomeMessage("Welcome to CHATTERBOX!\n");
-    write(welcomeMessage);
     async_read();
 }
 
