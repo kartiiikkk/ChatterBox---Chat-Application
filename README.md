@@ -28,8 +28,11 @@ This project demonstrates real-time communication between multiple clients throu
 
 ## 📂 Project Structure
 chat_app/
+
 ├── server.cpp # Server code
+
 ├── client.cpp # Client code
+
 └── README.md # Documentation
 
 ---
@@ -38,9 +41,10 @@ chat_app/
 
 ### 1️⃣ Install Dependencies
 #### On Ubuntu / WSL:
-
+```bash
 sudo apt update
 sudo apt install g++ libboost-all-dev -y
+```
 
 ### 2️⃣ Compile
 g++ server.cpp -o server -lboost_system -lpthread
@@ -49,14 +53,14 @@ g++ client.cpp -o client -lboost_system -lpthread
 ### 3️⃣ Run
 
 Start the server:
-
+```bash
 ./server
-
+```
 
 Run clients (in other terminals or computers):
-
+```bash
 ./client
-
+```
 # 🌐 Networking Options
 
 ## Localhost (same PC):
@@ -64,35 +68,35 @@ Use 127.0.0.1 in client.cpp.
 
 ## LAN (Wi-Fi/Ethernet):
 
-#### Find server’s local IP:
+### Find server’s local IP:
 
-ip addr show   # Linux
-ipconfig       # Windows
+- **ip addr show**   # Linux
+- **ipconfig**     # Windows
 
 
-Replace in client.cpp:
+### Replace in client.cpp:
 
 socket.connect(tcp::endpoint(
     boost::asio::ip::address::from_string("192.168.x.x"), 1234));
 
 
-Over the Internet (Port Forwarding):
+### Over the Internet (Port Forwarding):
 
-Enable port forwarding (TCP 1234) on your router
+- **Enable port forwarding (TCP 1234) on your router**
 
-Get your public IP from whatismyip.com
+- **Get your public IP from whatismyip.com**
 
-Replace with public IP in client.cpp
+- **Replace with public IP in client.cpp**
 
 # 🎯 Future Improvements
 
-Add usernames for clients
+- **Add usernames for clients**
 
-Implement private chats (/msg command)
+- **Implement private chats (/msg command)**
 
-Add message logging on the server
+- **Add message logging on the server**
 
-GUI-based client (Qt / SFML)
+- **GUI-based client (Qt / SFML)**
 
 
 ## 🔗 GitHub Repository
