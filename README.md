@@ -48,6 +48,7 @@ sudo apt install g++ libboost-all-dev -y
 
 ### 2️⃣ Compile
 g++ server.cpp -o server -lboost_system -lpthread
+
 g++ client.cpp -o client -lboost_system -lpthread
 
 ### 3️⃣ Run
